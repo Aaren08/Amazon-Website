@@ -72,16 +72,16 @@ document.querySelector('.JS-products-grid').innerHTML = productsHTML
 document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
     button.addEventListener('click', () => {
        
-        // data attribute (just another HTML attribute)
-        // allows us to attach any information to an element
-        // adding it to all cart buttons
+      // data attribute (just another HTML attribute)
+      // allows us to attach any information to an element
+      // adding it to all cart buttons
 
-        // Fetching the products name and putting it in productName variable
-        const productID =  button.dataset.productID
-        let matchingItem
+      // Fetching the products name and putting it in productName variable
+      const productId =  button.dataset.productId
+      let matchingItem
 
       cart.forEach( (item) => {
-        if (productID === item.productID) {
+        if (productId === item.productId) {
           matchingItem = item
         }
       })
@@ -91,12 +91,19 @@ document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
       } else {
         // Putting products into an array
         cart.push({
-          productID: productID,
+          productId: productId,
           quantity: 1
-      })
+        })
       }
 
-        
+      // 5. Making cart button interactive by looping through array and summing quantity.
+      
+      let cartQuantity = 0
+      cart.forEach( (item) => {
+        cartQuantity += item.quantity
+      })
+      document.querySelector('.JS-cart-quantity').textContent = cartQuantity
+      
         
     })
 })
