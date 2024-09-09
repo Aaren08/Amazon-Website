@@ -1,5 +1,7 @@
-// DATA STUCTURE
+import {cart} from '../data/cart.js'
 
+
+// DATA STUCTURE
 // Loaded products from products.js by putting it above amazon.js
 
 // 2. Combining all the HTML together into one string
