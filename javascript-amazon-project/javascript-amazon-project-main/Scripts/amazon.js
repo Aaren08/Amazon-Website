@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js'
+import {cart, addToCart} from '../data/cart.js'
 import {products} from '../data/products.js'
 
 
@@ -70,6 +70,20 @@ products.forEach( (product) => {
 document.querySelector('.JS-products-grid').innerHTML = productsHTML
 
 
+
+
+// 5. Making cart button interactive by looping through array and summing quantity.
+
+function updateCartQuantity() {
+  let cartQuantity = 0
+
+  cart.forEach( (cartItem) => {
+    cartQuantity += cartItem.quantity
+  })
+  document.querySelector('.JS-cart-quantity').textContent = cartQuantity
+      
+}
+
 // 4. Adding JS for add to cart button
 
 document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
@@ -81,31 +95,8 @@ document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
 
       // Fetching the products name and putting it in productName variable
       const productId =  button.dataset.productId
-      let matchingItem
-
-      cart.forEach( (item) => {
-        if (productId === item.productId) {
-          matchingItem = item
-        }
-      })
-
-      if (matchingItem) {
-        matchingItem.quantity += 1
-      } else {
-        // Putting products into an array
-        cart.push({
-          productId: productId,
-          quantity: 1
-        })
-      }
-
-      // 5. Making cart button interactive by looping through array and summing quantity.
-      
-      let cartQuantity = 0
-      cart.forEach( (item) => {
-        cartQuantity += item.quantity
-      })
-      document.querySelector('.JS-cart-quantity').textContent = cartQuantity
+      addToCart(productId)
+      updateCartQuantity()
       
         
     })
