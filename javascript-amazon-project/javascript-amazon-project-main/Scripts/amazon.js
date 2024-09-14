@@ -1,6 +1,6 @@
 import {cart, addToCart} from '../data/cart.js'
 import {products} from '../data/products.js'
-import { formatCurrency } from "../Scripts/utils/money.js"
+import {formatCurrency} from "../Scripts/utils/money.js"
 
 
 // DATA STUCTURE
@@ -38,7 +38,7 @@ products.forEach( (product) => {
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select JS-quantity-selector-${product.id}>
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -65,24 +65,20 @@ products.forEach( (product) => {
           </button>
         </div>`
     })
-    
+
 // 3. putting the products on a webpage --> DOM
 
 document.querySelector('.JS-products-grid').innerHTML = productsHTML
-
-
 
 
 // 5. Making cart button interactive by looping through array and summing quantity.
 
 function updateCartQuantity() {
   let cartQuantity = 0
-
   cart.forEach( (cartItem) => {
     cartQuantity += cartItem.quantity
   })
   document.querySelector('.JS-cart-quantity').textContent = cartQuantity
-      
 }
 
 // 4. Adding JS for add to cart button
@@ -98,7 +94,9 @@ document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
       const productId =  button.dataset.productId
       addToCart(productId)
       updateCartQuantity()
-      
+      const quantitySelector = document.querySelector(`.JS-quantity-selector-${productId}`)
+      const quantity = Number(quantitySelector.value)
+
         
     })
 })

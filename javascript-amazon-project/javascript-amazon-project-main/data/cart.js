@@ -29,12 +29,12 @@ export function addToCart(productId) {
     })
   
     if (matchingItem) {
-      matchingItem.quantity += 1
+      matchingItem.quantity += quantity
     } else {
       // Putting products into an array
       cart.push({
         productId: productId,
-        quantity: 1
+        quantity: quantity
       })
     }
     saveToStorage()
