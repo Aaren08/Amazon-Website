@@ -1,6 +1,6 @@
 import {cart, addToCart} from '../data/cart.js'
 import {products} from '../data/products.js'
-import {formatCurrency} from "../Scripts/utils/money.js"
+import {formatCurrency} from '../Scripts/utils/money.js'
 
 
 // DATA STUCTURE
@@ -38,7 +38,7 @@ products.forEach( (product) => {
           </div>
 
           <div class="product-quantity-container">
-            <select JS-quantity-selector-${product.id}>
+            <select class="JS-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -54,7 +54,7 @@ products.forEach( (product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart JS-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -67,8 +67,39 @@ products.forEach( (product) => {
     })
 
 // 3. putting the products on a webpage --> DOM
-
 document.querySelector('.JS-products-grid').innerHTML = productsHTML
+
+
+// 4. Adding JS for add to cart button
+
+function addToCartButton() {
+  document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
+    button.addEventListener('click', () => {
+       
+      // data attribute (just another HTML attribute)
+      // allows us to attach any information to an element
+      // adding it to all cart buttons
+
+      // Fetching the products name and putting it in productName variable
+      
+      //const productId =  button.dataset.productId
+      const { productId } = button.dataset    // Destructuring
+      const selectValue = document.querySelector(`.JS-quantity-selector-${productId}`)
+      const quantity = Number(selectValue.value)
+
+      addToCart(productId, quantity)
+      updateCartQuantity()
+      
+      const animateAdded = document.querySelector(`.JS-added-to-cart-${productId}`)
+      animateAdded.classList.add('added-to-cart-visible')
+      setTimeout( () => {
+        animateAdded.classList.remove('added-to-cart-visible')
+      }, 2000)
+    })
+  })
+}
+addToCartButton()
+  
 
 
 // 5. Making cart button interactive by looping through array and summing quantity.
@@ -80,23 +111,3 @@ function updateCartQuantity() {
   })
   document.querySelector('.JS-cart-quantity').textContent = cartQuantity
 }
-
-// 4. Adding JS for add to cart button
-
-document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
-    button.addEventListener('click', () => {
-       
-      // data attribute (just another HTML attribute)
-      // allows us to attach any information to an element
-      // adding it to all cart buttons
-
-      // Fetching the products name and putting it in productName variable
-      const productId =  button.dataset.productId
-      addToCart(productId)
-      updateCartQuantity()
-      const quantitySelector = document.querySelector(`.JS-quantity-selector-${productId}`)
-      const quantity = Number(quantitySelector.value)
-
-        
-    })
-})

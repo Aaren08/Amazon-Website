@@ -18,27 +18,26 @@ function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart))
 }
 
-
-export function addToCart(productId) {
+ 
+export function addToCart(productId, quantity) {
     let matchingItem
-  
     cart.forEach( (cartItem) => {
       if (productId === cartItem.productId) {
         matchingItem = cartItem
       }
     })
-  
     if (matchingItem) {
       matchingItem.quantity += quantity
     } else {
       // Putting products into an array
       cart.push({
-        productId: productId,
-        quantity: quantity
+        productId,
+        quantity
       })
     }
     saveToStorage()
 }
+
 
 // Removing Items from checkout page
 
@@ -53,3 +52,16 @@ export function removeFromCart(productId) {
   saveToStorage()
 }
 
+
+// 12. Updating the product value by its ID and saving into localStorage.
+
+export function updateQuantity(productId, newQuantity) {
+  let matchingItem
+  cart.forEach( (cartItem) => {
+    if (productId === cartItem.productId) {
+      matchingItem = cartItem
+    }
+  })
+  matchingItem.quantity = newQuantity
+  saveToStorage()
+}
