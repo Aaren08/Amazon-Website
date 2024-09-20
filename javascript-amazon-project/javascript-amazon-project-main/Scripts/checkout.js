@@ -2,7 +2,7 @@ import { cart, removeFromCart, updateQuantity, updateDeliveryOption } from "../d
 import { products } from "../data/products.js"
 import { formatCurrency } from "../Scripts/utils/money.js"
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-import {deliveryOptions} from '../data/delivery-options.js'
+import {deliveryOptions} from '../data/deliveryoptions.js'
 
 
 // 13. Adding an external library
@@ -15,23 +15,7 @@ deliveryDate.format('dddd, MMMM D')
 // 15. A better way to update the webpage --> re-run and re-generate all the html
 
 function renderOrderSummary() {
-  const deliveryOptionId = cartItem.deliveryOptionId
   
-  let deliveryOption 
-  deliveryOptions.forEach( (option) => {
-    if (option.id === deliveryOptionId) {
-      deliveryOption = option
-    }
-  })
-    const today = dayjs()
-    const deliveryDate = today.add(
-      deliveryOption.deliveryDays,
-      'days'
-    )
-    const dateString = deliveryDate.format(
-      'dddd, MMMM D'
-    )
-
   let cartSummaryHTML = ''
   cart.forEach( (cartItem) => {
       const productId = cartItem.productId
@@ -39,12 +23,28 @@ function renderOrderSummary() {
       // 6. Duplicating the addition of products
 
       let matchingProduct
-
       products.forEach( (product) => {
           if (product.id === productId) {
               matchingProduct = product
           }
       })
+
+      const deliveryOptionId = cartItem.deliveryOptionId
+
+      let deliveryOption
+      deliveryOptions.forEach( (option) => {
+        if (option.id === deliveryOptionId) {
+          deliveryOption = option
+        }
+      })
+      const today = dayjs()
+      const deliveryDate = today.add(
+        deliveryOption.deliveryDays,
+        'days'
+      )
+      const dateString = deliveryDate.format(
+        'dddd, MMMM D'
+      )
       
       cartSummaryHTML +=`
           <div class="cart-item-container 
@@ -175,15 +175,15 @@ function renderOrderSummary() {
       const dateString = deliveryDate.format(
         'dddd, MMMM D'
       )
-      const isChecked = deliveryOption.id = cartItem.deliveryOptionId
+      const isChecked = deliveryOption.id === cartItem.deliveryOptionId
 
       const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrency(deliveryOption.priceCents)} -`
       html +=` 
         <div class="delivery-option JS-delivery-option"
         data-product-id="${matchingProduct.id}"
         data-delivery-option="${deliveryOption.id}">
-          <input type="radio" 
-          ${isChecked ? 'checked' : ''}
+            <input type="radio" 
+            ${isChecked ? 'checked' : ''}
             class="delivery-option-input"
             name="delivery-option-${matchingProduct.id}">
             <div>
@@ -199,13 +199,19 @@ function renderOrderSummary() {
     })
     return html
   }
+
+
+  // 17. Fetching the delivery date according to radio checks
+
+  document.querySelectorAll('.JS-delivery-option').forEach( (element) => {
+    element.addEventListener('click', () => {
+      const { productId, deliveryOptionId } = element.dataset
+      updateDeliveryOption(productId, deliveryOptionId)
+      renderOrderSummary()
+    })
+  })
 }
 renderOrderSummary()
 
 
-document.querySelectorAll('.JS-delivery-option').forEach( (element) => {
-  element.addEventListener('click', () => {
-    const { productId, deliveryOptionId } = element.dataset
-    updateDeliveryOption(productId, deliveryOptionId)
-  })
-})
+

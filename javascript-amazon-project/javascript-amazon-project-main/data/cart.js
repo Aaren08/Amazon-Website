@@ -70,7 +70,7 @@ export function updateQuantity(productId, newQuantity) {
 }
 
 
-// 15. Function to update the delivery id in the cart
+// 16. Function to update the delivery id in the cart
 
 export function updateDeliveryOption(productId, deliveryOptionId) {
   let matchingItem
