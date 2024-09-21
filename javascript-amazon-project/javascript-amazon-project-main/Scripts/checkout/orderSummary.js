@@ -2,14 +2,8 @@ import { cart, removeFromCart, updateQuantity, updateDeliveryOption } from "../.
 import { products, getProduct } from "../../data/products.js"
 import { formatCurrency } from "../../Scripts/utils/money.js"
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-import {deliveryOptions, getDeliveryOption} from '../../data/deliveryoptions.js'
-
-
-// 13. Adding an external library
-
-const today = dayjs()
-const deliveryDate = today.add(7, 'days')
-deliveryDate.format('dddd, MMMM D')
+import { deliveryOptions, getDeliveryOption } from '../../data/deliveryoptions.js'
+import { renderPaymentSummary } from "./paymentSummary.js"
 
 
 // 15. A better way to update the webpage --> re-run and re-generate all the html
@@ -98,7 +92,7 @@ export function renderOrderSummary() {
       
       const container = document.querySelector(`.JS-cart-item-container-${productId}`)
       container.remove()
-      updateCheckoutList()
+      renderPaymentSummary()
     })
   })
 
@@ -200,6 +194,7 @@ export function renderOrderSummary() {
       const { productId, deliveryOptionId } = element.dataset
       updateDeliveryOption(productId, deliveryOptionId)
       renderOrderSummary()
+      renderPaymentSummary()
     })
   })
 }
