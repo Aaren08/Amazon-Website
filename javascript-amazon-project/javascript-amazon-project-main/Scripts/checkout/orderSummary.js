@@ -2,7 +2,7 @@ import { cart, removeFromCart, updateQuantity, updateDeliveryOption } from "../.
 import { products, getProduct } from "../../data/products.js"
 import { formatCurrency } from "../../Scripts/utils/money.js"
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-import { deliveryOptions, getDeliveryOption } from '../../data/deliveryoptions.js'
+import { deliveryOptions, getDeliveryOption, calculateDeliveryDate } from '../../data/deliveryoptions.js'
 import { renderPaymentSummary } from "./paymentSummary.js"
 
 
@@ -20,17 +20,8 @@ export function renderOrderSummary() {
       
 
       const deliveryOptionId = cartItem.deliveryOptionId
-
       const deliveryOption = getDeliveryOption(deliveryOptionId)
-      
-      const today = dayjs()
-      const deliveryDate = today.add(
-        deliveryOption.deliveryDays,
-        'days'
-      )
-      const dateString = deliveryDate.format(
-        'dddd, MMMM D'
-      )
+      const dateString = calculateDeliveryDate(deliveryOption)
       
       cartSummaryHTML +=`
           <div class="cart-item-container 
@@ -92,6 +83,7 @@ export function renderOrderSummary() {
       
       const container = document.querySelector(`.JS-cart-item-container-${productId}`)
       container.remove()
+      renderOrderSummary()
       renderPaymentSummary()
     })
   })
@@ -141,9 +133,12 @@ export function renderOrderSummary() {
       saveContainer.classList.remove('is-editing-quantity')
 
       // Updating the value on DOM (Checkout and Quantity)
-      const quantityLabel = document.querySelector(`.JS-quantity-label-${matchingProduct.id}`)
-      quantityLabel.textContent = newQuantity
-      updateCheckoutList()
+        // const quantityLabel = document.querySelector(`.JS-quantity-label-${matchingProduct.id}`)
+        // quantityLabel.textContent = newQuantity
+        // updateCheckoutList()
+
+      renderOrderSummary()
+      renderPaymentSummary()
     })
   })
 
@@ -153,15 +148,9 @@ export function renderOrderSummary() {
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = ''
     deliveryOptions.forEach( (deliveryOption) => {
-      const today = dayjs()
-      const deliveryDate = today.add(
-        deliveryOption.deliveryDays,
-        'days'
-      )
-      const dateString = deliveryDate.format(
-        'dddd, MMMM D'
-      )
+     
       const isChecked = deliveryOption.id === cartItem.deliveryOptionId
+      const dateString = calculateDeliveryDate(deliveryOption)
 
       const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrency(deliveryOption.priceCents)} -`
       html +=` 
