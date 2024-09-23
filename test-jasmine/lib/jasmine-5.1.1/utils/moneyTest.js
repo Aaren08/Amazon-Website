@@ -1,9 +1,9 @@
-import { formatCurrency } from '../javascript-amazon-project/javascript-amazon-project-main/Scripts/utils/money.js';
+import { formatCurrency } from '../../../../javascript-amazon-project/javascript-amazon-project-main/Scripts/utils/money.js';
 
 // Test Suite
 
 // We can also use describe inside describe.
-describe('Test Suite: formatCurrnecy', () => {
+describe('Test Suite: formatCurrency', () => {
     it('converts cents into dollars', () => {
         expect(formatCurrency(2095)).toEqual('20.95')        // expect gives us objects
     }) 
