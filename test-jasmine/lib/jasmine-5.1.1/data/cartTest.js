@@ -45,3 +45,6 @@ describe('Test Suite: addToCart', () => {
 
     })
 })
+
+// Simple tests are called unit tests
+// Hard tests are called integration tests
