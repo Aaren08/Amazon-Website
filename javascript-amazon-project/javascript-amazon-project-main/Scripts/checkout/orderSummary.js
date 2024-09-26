@@ -9,7 +9,7 @@ import { renderPaymentSummary } from "./paymentSummary.js"
 // 15. A better way to update the webpage --> re-run and re-generate all the html
 
 export function renderOrderSummary() {
-  
+
   let cartSummaryHTML = ''
   cart.forEach( (cartItem) => {
       const productId = cartItem.productId
@@ -149,7 +149,6 @@ export function renderOrderSummary() {
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = ''
     deliveryOptions.forEach( (deliveryOption) => {
-     
       const isChecked = deliveryOption.id === cartItem.deliveryOptionId
       const dateString = calculateDeliveryDate(deliveryOption)
 
@@ -181,7 +180,10 @@ export function renderOrderSummary() {
 
   document.querySelectorAll('.JS-delivery-option').forEach( (element) => {
     element.addEventListener('click', () => {
-      const { productId, deliveryOptionId } = element.dataset
+      // const productId = element.dataset.productId
+      // const deliveryOptionId = element.dataset.deliveryOption
+
+      const { productId, deliveryOption: deliveryOptionId } = element.dataset
       updateDeliveryOption(productId, deliveryOptionId)
       renderOrderSummary()
       renderPaymentSummary()

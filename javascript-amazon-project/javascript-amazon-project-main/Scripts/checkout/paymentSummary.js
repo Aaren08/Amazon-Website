@@ -16,7 +16,7 @@ export function renderPaymentSummary() {
         productPriceCents += product.priceCents * cartItem.quantity
         
     // For part 2 -> Loop through cart. Add all shipping costs together.
-        const deliveryOption = getDeliveryOption(cartItem.getDeliveryOptionId)
+        const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId)
         shippingPriceCents += deliveryOption.priceCents
     })
     
@@ -66,3 +66,4 @@ export function renderPaymentSummary() {
     document.querySelector('.JS-payment-summary').innerHTML = paymentSummaryHTML
 
 }
+

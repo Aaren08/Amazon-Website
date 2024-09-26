@@ -16,6 +16,7 @@ export function loadFromStorage() {
       quantity: 1,
       deliveryOptionId: '2'
     }]
+    saveToStorage()
   }
 }
 
@@ -27,7 +28,7 @@ function saveToStorage() {
 }
 
  
-export function addToCart(productId, quantity) {
+export function addToCart(productId, quantity, deliveryOptionId) {
     let matchingItem
     cart.forEach( (cartItem) => {
       if (productId === cartItem.productId) {
@@ -41,7 +42,7 @@ export function addToCart(productId, quantity) {
       cart.push({
         productId: productId,
         quantity: quantity,
-        deliveryOptionId: '1'
+        deliveryOptionId: deliveryOptionId
       })
     }
     saveToStorage()
@@ -85,6 +86,8 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
         matchingItem = cartItem
       }
     })
-    matchingItem.deliveryOptionId = deliveryOptionId
-    saveToStorage()
+    if(matchingItem) {
+      matchingItem.deliveryOptionId = deliveryOptionId
+      saveToStorage()
+    }
 }
