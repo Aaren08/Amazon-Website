@@ -32,6 +32,27 @@ class Product {
   getPrice(){
     return `$${formatCurrency(this.priceCents)}`
   }
+
+  extraInfoHTML() {
+    return '';
+  }
+}
+
+// INHERITANCE
+
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails) {
+    super(productDetails);   // calls the constructor of parent class which is Product
+    this.sizeChartLink = productDetails.sizeChartLink
+  }
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.sizeChartLink}" target= "_blank">Size chart</a>
+    `
+  }
 }
 
 export const products = [
@@ -694,6 +715,13 @@ export const products = [
     ]
   }
 ].map( (productDetails) => {    // Transforming each product into class.
+  
+  // Checking for type property
+
+  if (productDetails.type === 'clothing') {
+    return new Clothing(productDetails)
+  } 
+  
   // Converting obj into class
   return new Product(productDetails);
 })
