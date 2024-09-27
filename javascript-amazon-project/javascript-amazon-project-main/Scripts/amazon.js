@@ -1,5 +1,5 @@
-import {cart, addToCart} from '../data/cart.js'
-import {products} from '../data/products.js'
+import { cart } from '../data/cart-class.js'
+import { products } from '../data/products.js'
 import {formatCurrency} from '../Scripts/utils/money.js'
 
 
@@ -89,8 +89,8 @@ function addToCartButton() {
       const selectValue = document.querySelector(`.JS-quantity-selector-${productId}`)
       const quantity = Number(selectValue.value)
 
-      addToCart(productId, quantity)
-      updateCartQuantity()
+      cart.addToCart(productId, quantity)
+    updateCartQuantity()
       
       const animateAdded = document.querySelector(`.JS-added-to-cart-${productId}`)
       animateAdded.classList.add('added-to-cart-visible')
@@ -108,7 +108,7 @@ addToCartButton()
 
 function updateCartQuantity() {
   let cartQuantity = 0
-  cart.forEach( (cartItem) => {
+  cart.cartItems.forEach( (cartItem) => {
     cartQuantity += cartItem.quantity
   })
   document.querySelector('.JS-cart-quantity').textContent = cartQuantity

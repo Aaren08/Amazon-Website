@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateQuantity, updateDeliveryOption } from "../../data/cart.js"
+import { cart } from "../../data/cart-class.js"
 import { products, getProduct } from "../../data/products.js"
 import { formatCurrency } from "../../Scripts/utils/money.js"
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
@@ -11,7 +11,7 @@ import { renderPaymentSummary } from "./paymentSummary.js"
 export function renderOrderSummary() {
 
   let cartSummaryHTML = ''
-  cart.forEach( (cartItem) => {
+  cart.cartItems.forEach( (cartItem) => {
       const productId = cartItem.productId
 
       // 6. Duplicating the addition of products
@@ -78,7 +78,7 @@ export function renderOrderSummary() {
   .forEach( (link) => {
     link.addEventListener('click', () => {
       const { productId } = link.dataset
-      removeFromCart(productId)
+      cart.removeFromCart(productId)
 
       // Using DOM to remove item from cart
       
@@ -94,7 +94,7 @@ export function renderOrderSummary() {
 
   function updateCheckoutList() {
     let cartQuantity = 0
-    cart.forEach( (cartItem) => {
+    cart.cartItems.forEach( (cartItem) => {
       cartQuantity += cartItem.quantity
     })
     document.querySelector('.JS-return-to-home-link').textContent = `${cartQuantity} items`
@@ -128,7 +128,7 @@ export function renderOrderSummary() {
         alert('Quantity must be at least 0 and less than 1000');
         return;
       }
-      updateQuantity(productId, newQuantity)
+      cart.updateQuantity(productId, newQuantity)
 
       const saveContainer = document.querySelector(`.JS-cart-item-container-${productId}`)
       saveContainer.classList.remove('is-editing-quantity')
@@ -184,7 +184,7 @@ export function renderOrderSummary() {
       // const deliveryOptionId = element.dataset.deliveryOption
 
       const { productId, deliveryOption: deliveryOptionId } = element.dataset
-      updateDeliveryOption(productId, deliveryOptionId)
+      cart.updateDeliveryOption(productId, deliveryOptionId)
       renderOrderSummary()
       renderPaymentSummary()
     })

@@ -101,7 +101,7 @@ class Cart {
 
 // called Instance
 // values put here are used in constructor parameter
-const cart = new Cart('cart-oop')
+export const cart = new Cart('cart-oop')
 const businessCart = new Cart('cart-business')
 
 
