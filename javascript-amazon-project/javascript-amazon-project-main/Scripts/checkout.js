@@ -6,8 +6,26 @@ import { loadProducts, loadProductsFetch } from "../data/products.js"
 import { loadCart } from "../data/cart.js";
 
 
-// Just an example
+// Async -> makes a function return a promise
 
+async function loadPage() {
+    await loadProductsFetch();
+
+    new Promise( (resolve) => {
+        loadCart( () => {
+            resolve()       // similar to done()
+        })
+    });
+
+    renderOrderSummary()
+    renderPaymentSummary()
+}
+loadPage()
+
+
+// PROMISES
+// Just an example
+/*
 Promise.all([
     loadProductsFetch(),
     // new Promise( (resolve) => {
@@ -25,8 +43,7 @@ Promise.all([
     renderOrderSummary()
     renderPaymentSummary()
 })
-
-// PROMISES
+*/
 /*
 new Promise( (resolve) => {
     loadProducts( () => {
