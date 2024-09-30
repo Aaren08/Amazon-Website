@@ -106,6 +106,36 @@ class Appliance extends Product {
 
 export let products = []
 
+  // fetch() => A better way to make HTTP requests. Uses a promise
+
+export function loadProductsFetch() {
+  const promise = fetch('https://supersimplebackend.dev/products').then( (response) => {
+  return response.json()    //asynchronous
+}).then( (productsData) => {
+    products = productsData.map( (productDetails) => {    
+    
+      // Checking for type property
+    
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails)
+      }
+    
+      if (productDetails.type === 'appliance') {
+        return new Appliance(productDetails)
+      }
+      
+      // Converting obj into class
+      return new Product(productDetails);
+    })
+    console.log('load products')
+  })
+  return promise
+}
+// loadProductsFetch().then( () => {
+//   console.log('Next')
+// })
+
+
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
 

@@ -2,18 +2,20 @@ import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 //import '../data/cart-class.js'
 //import '../data/backend-practice.js'
-import { loadProducts } from "../data/products.js"
+import { loadProducts, loadProductsFetch } from "../data/products.js"
 import { loadCart } from "../data/cart.js";
 
 
 // Just an example
 
 Promise.all([
-    new Promise( (resolve) => {
-        loadProducts( () => {
-            resolve('value1')       // similar to done()
-        })
-    }),
+    loadProductsFetch(),
+    // new Promise( (resolve) => {
+    //     loadProducts( () => {
+    //         resolve('value1')       // similar to done()
+    //     })
+    // }),
+    
     new Promise( (resolve) => {
         loadCart( () => {
             resolve()       // similar to done()
@@ -50,4 +52,5 @@ new Promise( (resolve) => {
 //         renderPaymentSummary()
 //     })
 // })
+
 

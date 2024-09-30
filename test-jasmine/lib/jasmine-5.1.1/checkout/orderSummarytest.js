@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "../../../../javascript-amazon-project/javascript-amazon-project-main/Scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from '../../../../javascript-amazon-project/javascript-amazon-project-main/data/cart.js';
-import { loadProducts } from "../../../../javascript-amazon-project/javascript-amazon-project-main/data/products.js";
+import { loadProducts, loadProductsFetch } from "../../../../javascript-amazon-project/javascript-amazon-project-main/data/products.js";
 
 // Testing 2 parts
 // 1. How the page looks
@@ -14,9 +14,12 @@ describe('Test Suite: renderOrderSummary', () => {
       // done is a function provided by jasmine,
       // when added, beforeAll will not automatically go to next step. 
   beforeAll((done) => {
-    loadProducts(() => {
-      done();         // now it will go to next step
-    });
+    loadProductsFetch().then( () => {
+      done()
+    })
+    // (() => {
+    //   done();         // now it will go to next step
+    // });
   })
 
 // Jasmine shortcut "Hooks" --> Lets us run some code for each test
