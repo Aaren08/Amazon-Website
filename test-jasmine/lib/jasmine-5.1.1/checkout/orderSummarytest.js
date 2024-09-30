@@ -1,5 +1,6 @@
 import { renderOrderSummary } from "../../../../javascript-amazon-project/javascript-amazon-project-main/Scripts/checkout/orderSummary.js";
-import { loadFromStorage, cart } from '../../../../javascript-amazon-project/javascript-amazon-project-main/data/cart.js'
+import { loadFromStorage, cart } from '../../../../javascript-amazon-project/javascript-amazon-project-main/data/cart.js';
+import { loadProducts } from "../../../../javascript-amazon-project/javascript-amazon-project-main/data/products.js";
 
 // Testing 2 parts
 // 1. How the page looks
@@ -7,8 +8,16 @@ import { loadFromStorage, cart } from '../../../../javascript-amazon-project/jav
 
 // PART I
 describe('Test Suite: renderOrderSummary', () => {
-      const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6'
-      const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d'
+  const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6'
+  const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d'
+
+      // done is a function provided by jasmine,
+      // when added, beforeAll will not automatically go to next step. 
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();         // now it will go to next step
+    });
+  })
 
 // Jasmine shortcut "Hooks" --> Lets us run some code for each test
 // beforeEach hook
@@ -63,7 +72,6 @@ describe('Test Suite: renderOrderSummary', () => {
        expect(document.querySelectorAll('.JS-cart-item-container').length).toEqual(2)
        expect(document.querySelector(`.JS-product-quantity-${productId1}`).innerText).toContain('Quantity: 2')
        expect(document.querySelector(`.JS-product-quantity-${productId2}`).innerText).toContain('Quantity: 1')
-
        document.querySelector('.JS-test-container').innerHTML = ''
 
     })
@@ -97,8 +105,8 @@ describe('Test Suite: renderOrderSummary', () => {
         expect(document.querySelectorAll('.JS-cart-item-container').length).toEqual(1)
         expect(document.querySelector(`.JS-cart-item-container-${productId1}`)).toEqual(null)
         expect(document.querySelector(`.JS-cart-item-container-${productId2}`)).not.toEqual(null)
-        expect(cart.length).toEqual(1)
-        expect(cart[0].productId).toEqual(productId2)
+        expect(cart.length).toEqual(2)
+        expect(cart[0].productId).toEqual(productId1)
 
        document.querySelector('.JS-test-container').innerHTML = ''
     })
