@@ -113,3 +113,5 @@ describe('Test Suite: renderOrderSummary', () => {
 })
 
 // Code commented out due to hook functionality
+
+//Promises => A better way to handle asynchronous code similar to done() function
