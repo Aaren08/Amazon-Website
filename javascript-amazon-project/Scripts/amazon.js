@@ -1,24 +1,21 @@
-import { cart } from '../data/cart-class.js'
-import { products, loadProducts } from '../data/products.js'
-import {formatCurrency} from '../Scripts/utils/money.js'
-
+import { cart } from "../data/cart-class.js";
+import { products, loadProducts } from "../data/products.js";
 
 // DATA STUCTURE
 // Loaded products from products.js by putting it above amazon.js
 
 // 2. Combining all the HTML together into one string
 
-loadProducts(renderProductsGrid)
+loadProducts(renderProductsGrid);
 
 function renderProductsGrid() {
+  let productsHTML = "";
 
-  let productsHTML = ''
-
-  // Generating the HTML for multiple products using 
+  // Generating the HTML for multiple products using
   // forEach loop
 
-  products.forEach( (product) => {
-      productsHTML +=  `                   
+  products.forEach((product) => {
+    productsHTML += `                   
           <div class="product-container">
             <div class="product-image-container">
               <img class="product-image"
@@ -69,52 +66,55 @@ function renderProductsGrid() {
             data-product-id="${product.id}">
               Add to Cart
             </button>
-          </div>`
-      })
+          </div>`;
+  });
 
   // 3. putting the products on a webpage --> DOM
-  document.querySelector('.JS-products-grid').innerHTML = productsHTML
+  document.querySelector(".JS-products-grid").innerHTML = productsHTML;
 
+  // Dispatch the custom event after rendering
+  document.dispatchEvent(new Event("productsRendered"));
 
   // 4. Adding JS for add to cart button
 
   function addToCartButton() {
-    document.querySelectorAll('.JS-add-to-cart-btn').forEach( (button) => {
-      button.addEventListener('click', () => {
-        
+    document.querySelectorAll(".JS-add-to-cart-btn").forEach((button) => {
+      button.addEventListener("click", () => {
         // data attribute (just another HTML attribute)
         // allows us to attach any information to an element
         // adding it to all cart buttons
 
         // Fetching the products name and putting it in productName variable
-        
+
         //const productId =  button.dataset.productId
-        const { productId } = button.dataset    // Destructuring
-        const selectValue = document.querySelector(`.JS-quantity-selector-${productId}`)
-        const quantity = Number(selectValue.value)
+        const { productId } = button.dataset; // Destructuring
+        const selectValue = document.querySelector(
+          `.JS-quantity-selector-${productId}`
+        );
+        const quantity = Number(selectValue.value);
 
-        cart.addToCart(productId, quantity)
-      updateCartQuantity()
-        
-        const animateAdded = document.querySelector(`.JS-added-to-cart-${productId}`)
-        animateAdded.classList.add('added-to-cart-visible')
-        setTimeout( () => {
-          animateAdded.classList.remove('added-to-cart-visible')
-        }, 2000)
-      })
-    })
+        cart.addToCart(productId, quantity);
+        updateCartQuantity();
+
+        const animateAdded = document.querySelector(
+          `.JS-added-to-cart-${productId}`
+        );
+        animateAdded.classList.add("added-to-cart-visible");
+        setTimeout(() => {
+          animateAdded.classList.remove("added-to-cart-visible");
+        }, 2000);
+      });
+    });
   }
-  addToCartButton()
-    
-
+  addToCartButton();
 
   // 5. Making cart button interactive by looping through array and summing quantity.
 
   function updateCartQuantity() {
-    let cartQuantity = 0
-    cart.cartItems.forEach( (cartItem) => {
-      cartQuantity += cartItem.quantity
-    })
-    document.querySelector('.JS-cart-quantity').textContent = cartQuantity
+    let cartQuantity = 0;
+    cart.cartItems.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+    });
+    document.querySelector(".JS-cart-quantity").textContent = cartQuantity;
   }
 }

@@ -56,6 +56,10 @@
   flex-shrink: 1;
 }
 
+.no-order-found-container img {
+  height: 350px;
+}
+
 @media (max-width: 575px) {
   .order-header {
     flex-direction: column;
