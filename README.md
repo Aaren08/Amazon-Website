@@ -126,22 +126,26 @@ test-jasmine/
 ## 🛠 Technologies Used
 
 ### Frontend
+
 - **HTML5**: Semantic markup and form handling
 - **CSS3**: Responsive design, flexbox, grid layouts
 - **JavaScript (ES6+)**: Classes, modules, arrow functions, destructuring
 - **DOM APIs**: Element selection, event handling, manipulation
 
 ### Data & Storage
+
 - **LocalStorage API**: Client-side persistent storage for cart and orders
 - **JSON**: Data serialization and transmission
 - **XMLHttpRequest & Fetch API**: Backend communication
 
 ### Development & Testing
+
 - **Jasmine 5.1.1**: Testing framework and test runner
 - **Git**: Version control system
 - **Modules**: ES6 import/export for code organization
 
 ### Architecture Patterns
+
 - **Object-Oriented Programming**: Class-based design with inheritance
 - **Functional Programming**: Pure functions for utilities
 - **Module Pattern**: Encapsulation and namespace management
@@ -152,35 +156,39 @@ test-jasmine/
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - A modern web browser (Chrome, Firefox, Safari, Edge)
 - Basic understanding of JavaScript, HTML, and CSS
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/javascript-amazon-project.git
    cd javascript-amazon-project
    ```
 
 2. **Open the main page**
+
    ```bash
    # On Windows
    start amazon.html
-   
+
    # On macOS
    open amazon.html
-   
+
    # Or open in your browser directly
    ```
 
 ### Running Tests
 
 1. **Open the test runner**
+
    ```bash
    # Navigate to the test runner
    open test-jasmine/lib/jasmine-5.1.1/tests.html
-   
+
    # Or open in your browser
    ```
 
@@ -207,17 +215,20 @@ test-jasmine/
 ### 1. Product System (`data/products.js`)
 
 **Classes:**
+
 - `Product`: Base class with common properties (id, name, price, rating, image)
 - `Clothing`: Extends Product with size chart link
 - `Appliance`: Extends Product with instructions and warranty links
 
 **Key Methods:**
+
 - `getProduct(productId)`: Find product by ID
 - `getStarsUrl()`: Generate rating star image URL
 - `getPrice()`: Format price in currency
 - `extraInfoHTML()`: Generate product-specific HTML
 
 **Features:**
+
 - Product inheritance and polymorphism
 - Dynamic product loading from backend
 - Support for product variations
@@ -227,16 +238,19 @@ test-jasmine/
 **Two implementations available:**
 
 **Functional Approach (`cart.js`):**
+
 - Uses module pattern with closures
 - Export cart array and functions
 - Functions: addToCart, removeFromCart, updateQuantity, updateDeliveryOption
 
 **Object-Oriented Approach (`cart-class.js`):**
+
 - Cart class with private properties (#localStorageKey)
 - Instance methods for all operations
 - Multiple cart instances support (e.g., business cart, personal cart)
 
 **Key Features:**
+
 - Persistent storage via LocalStorage
 - Product quantity management
 - Delivery option selection
@@ -245,6 +259,7 @@ test-jasmine/
 ### 3. Order System (`data/orders.js`)
 
 **Functionality:**
+
 - Create and store orders
 - Order history tracking
 - Persistent storage
@@ -253,6 +268,7 @@ test-jasmine/
 ### 4. Delivery Options (`data/deliveryOptions.js`)
 
 **Features:**
+
 - Multiple delivery methods
 - Pricing for each option
 - Delivery date calculation
@@ -261,12 +277,14 @@ test-jasmine/
 ### 5. Checkout Module (`Scripts/checkout/`)
 
 **orderSummary.js:**
+
 - Renders cart items with prices
 - Handles item removal
 - Quantity updates
 - Product details display
 
 **paymentSummary.js:**
+
 - Calculates subtotal
 - Applies taxes
 - Includes delivery costs
@@ -275,11 +293,13 @@ test-jasmine/
 ### 6. Utility Functions (`Scripts/utils/`)
 
 **money.js:**
+
 ```javascript
-formatCurrency(priceCents) // Converts cents to formatted currency string
+formatCurrency(priceCents); // Converts cents to formatted currency string
 ```
 
 **search.js:**
+
 - Product search and filtering functionality
 
 ---
@@ -305,16 +325,19 @@ formatCurrency(priceCents) // Converts cents to formatted currency string
 ### Module Organization
 
 **Data Layer** (`data/` folder):
+
 - Manages application state
 - Handles storage persistence
 - Provides data access functions
 
 **Business Logic** (`Scripts/` folder):
+
 - Implements features using data
 - Handles user interactions
 - Renders UI components
 
 **Presentation Layer** (`styles/` folder):
+
 - CSS for visual presentation
 - Responsive design rules
 - Component styling
@@ -335,6 +358,7 @@ formatCurrency(priceCents) // Converts cents to formatted currency string
 The project includes comprehensive Jasmine tests for:
 
 1. **Cart Operations** (`cartTest.js`)
+
    - Adding existing products
    - Adding new products
    - Removing products
@@ -342,10 +366,12 @@ The project includes comprehensive Jasmine tests for:
    - Delivery option updates
 
 2. **Money Utilities** (`moneyTest.js`)
+
    - Currency formatting
    - Edge cases (zero, decimals)
 
 3. **Order Summary** (`orderSummaryTest.js`)
+
    - Rendering cart items
    - Item removal functionality
    - Quantity updates
@@ -379,6 +405,7 @@ test-jasmine/lib/jasmine-5.1.1/tests.html
 ## 📦 LocalStorage Schema
 
 ### Cart Storage
+
 ```json
 [
   {
@@ -390,6 +417,7 @@ test-jasmine/lib/jasmine-5.1.1/tests.html
 ```
 
 ### Orders Storage
+
 ```json
 [
   {
@@ -435,31 +463,37 @@ git push origin main
 This project demonstrates:
 
 1. **Object-Oriented Programming**
+
    - Classes and inheritance
    - Private properties (#)
    - Method overriding
 
 2. **Functional Programming**
+
    - Pure functions
    - Module closures
    - Higher-order functions
 
 3. **Asynchronous JavaScript**
+
    - Promises
    - Async/await
    - XMLHttpRequest vs Fetch
 
 4. **DOM Manipulation**
+
    - querySelector/querySelectorAll
    - Event listeners
    - Dynamic HTML generation
 
 5. **State Management**
+
    - Centralized state
    - State persistence
    - State updates and notifications
 
 6. **Testing & Quality**
+
    - Unit testing
    - Test-driven development
    - Mocking and spying
